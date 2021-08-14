@@ -4,11 +4,11 @@ syn match	cJCParamType	"\<\(\(const\|restrict\|volatile\|signed\|unsigned\|struc
 
 " Matchs for types in variables and function declarations
 syn match	cJCTypeInDecl	"^\s*\(\(inline\|const\|restrict\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I\i*\([ \t*]\+\(const\|restrict\|volatile\)\)*[ \t*]*" contained
-syn match	cJCDecl		"^\s*\(inline\s\+\)\=\(\I\i*[ \t*]\+\)\+\s*\I" contains=cJCTypeInDecl
+syn match	cJCDecl		"^\s*\(inline\s\+\)\=\(\I[[:ident:]:]*[ \t*]\+\)\+\s*\I" contains=cJCTypeInDecl
 
 " Matches function declarations and definitions
-syn region	cJCFunc		start="^\(\(inline\|const\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I\i*\s\+\**\s*\I\i*\s*(" end=")" contains=CJCParamVoid,cJCParamType,cJCTypeInDecl,cComment
-syn region	cJCFunc		start="^\I\i*\s*(" end=")" contains=CJCParamVoid,cJCParamType
+syn region	cJCFunc		start="^\(\(inline\|const\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I[[:ident:]:]*\s\+\**\s*\I[[:ident:]:]*\s*(" end=")" contains=CJCParamVoid,cJCParamType,cJCTypeInDecl,cComment
+syn region	cJCFunc		start="^\I[[:ident:]:]*\s*(" end=")" contains=CJCParamVoid,cJCParamType
 
 " Matchs type casts, function calls, and if/else/while, so they are not
 " accidentally matched by things above.
@@ -28,6 +28,9 @@ syn match	cStatement	"^\s*goto\s\+\I"me=e-1
 " le case
 syn match	cConditional	"^\s*case\>."me=e-1
 syn match	cConditional	":\s*$"
+
+" Delete the keyword-based cType matching, it just gets in the way
+syn clear cType
 
 " And finally the thing we wanted to do: highlight all the types using cType
 " highlight, not just the ones matching C keywords.

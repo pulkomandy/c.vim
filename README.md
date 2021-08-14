@@ -25,7 +25,7 @@ part is not working perfectly yet.
 How to use it
 -------------
 
-Put c.vim in your vim after/syntax/ directory. That's all.
+Put c.vim and cpp.vim in your vim after/syntax/ directory. That's all.
 
 This script uses the standard colors for highlighting (mainly cType) so you
 keep all your colorscheme and customizations when you install it.
