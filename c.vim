@@ -10,9 +10,13 @@ syn match	cJCDecl		"^\s*\(inline\s\+\)\=\(\I[[:ident:]:]*[ \t*]\+\)\+\s*\I" cont
 syn region	cJCFunc		start="^\(\(inline\|const\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I[[:ident:]:]*\s\+\**\s*\I[[:ident:]:]*\s*(" end=")" contains=CJCParamVoid,cJCParamType,cJCTypeInDecl,cComment
 syn region	cJCFunc		start="^\I[[:ident:]:]*\s*(" end=")" contains=CJCParamVoid,cJCParamType
 
-" Matchs type casts, function calls, and if/else/while, so they are not
+" Matches type casts
+syn match	cJCTypeCast	"(\@<=\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*\s*\**\s*\(restrict\)\?\s*)\s*[^) \t;,{]"me=e-2
+"syn match	cJCTypeCast	"[[:space:],(]*(\I\i*\s*\**\s*)\s*"me=e-1,ms=s+1
+
+
+" Matchs function calls and if/else/while, so they are not
 " accidentally matched by things above.
-syn match	cJCTypeCast	"(\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*\s*\**\s*\(restrict\)\?\s*)\s*[^) \t;,{]"me=e-1
 syn match	cJCFctCall	"\i\s*(\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*\s*\**\s*)"
 syn region	cJCIfParent	matchgroup=cStatement start="(" end=")" contained contains=ALLBUT,@cParenGroup,cJCTypeInDecl
 syn region	cJCIf		matchgroup=cConditional start="\(\s*\(\<else\s\+\)\=\<if\|\s*\<while\)\s*("rs=e-1 matchgroup=NONE end="." contains=cJCIfParent
@@ -20,7 +24,7 @@ syn region	cJCIf		matchgroup=cConditional start="\(\s*\(\<else\s\+\)\=\<if\|\s*\
 " Put our custom matching things in clusters that are used in ALLBUT places
 " in vim standard C highlighting, because we don't want them to match there.
 syn cluster cParenGroup add=cJCTypeInDecl,cJCParamType
-syn cluster cPreProcGroup add=cJCParamType
+syn cluster cPreProcGroup add=cJCParamType,cJCTypeCast
 
 " Override some standard C things because cJCDecl matches a bit too easily
 syn match	cStatement	"^\s*return\>."me=e-1

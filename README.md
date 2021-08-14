@@ -17,14 +17,19 @@ to redo everything.
 What it does
 ------------
 
-The main change is to detect and highlight types in function and variable
-declarations: variable type, function return type, and function parameters.
-Ideally, other parts of the highlighting will be left unchanged, but this
-part is not working perfectly yet.
+The main change is to detect and highlight types. The following cases are detected:
+- Variable declarations
+- Functions return type
+- Function parameters (in declaration and definition)
+- C-style casts (not C++ ones yet, TODO)
+- C++ "new" operator
 
 Another change is colorizing the parentheses of if, while, and for in the same
 color as the keyword (but this overrides rainbow parentheses so I'm not sure
 if it should be kept this way).
+
+Ideally, other parts of the highlighting will be left unchanged, but this
+part is not working perfectly yet.
 
 How to use it
 -------------
