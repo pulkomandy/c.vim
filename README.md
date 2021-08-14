@@ -45,3 +45,7 @@ How does it look
 Here is a side by side comparison, with and without c.vim:
 
 ![](enabled.png) ![](disabled.png)
+
+Of course it also works in C++ (and in non-dark mode):
+
+![](with.cpp.png) ![](without.cpp.png)
