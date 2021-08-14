@@ -22,6 +22,10 @@ declarations: variable type, function return type, and function parameters.
 Ideally, other parts of the highlighting will be left unchanged, but this
 part is not working perfectly yet.
 
+Another change is colorizing the parentheses of if, while, and for in the same
+color as the keyword (but this overrides rainbow parentheses so I'm not sure
+if it should be kept this way).
+
 How to use it
 -------------
 
