@@ -1,6 +1,14 @@
+" We define our own handling for if, else, while and for, so remove them from
+" the simple keyword matching used by default
+syn clear cConditional
+syn clear cRepeat
+
+syn keyword cConditional switch
+syn keyword cRepeat do
+
 " Matches for types in function parameters
 syn match	cJCParamVoid	"\<void\>" contained
-syn match	cJCParamType	"\<\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*[ \t*]\+\I"he=e-1 contained
+syn match	cJCParamType	"\<\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*[ \t*]\+\I"he=e-1 contained containedin=cJCFor
 
 " Matchs for types in variables and function declarations
 syn match	cJCTypeInDecl	"^\s*\(\(inline\|const\|restrict\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I\i*\([ \t*]\+\(const\|restrict\|volatile\)\)*[ \t*]*" contained
@@ -20,6 +28,7 @@ syn match	cJCTypeCast	"(\@<=\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|
 syn match	cJCFctCall	"\i\s*(\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*\s*\**\s*)"
 syn region	cJCIfParent	matchgroup=cStatement start="(" end=")" contained contains=ALLBUT,@cParenGroup,cJCTypeInDecl
 syn region	cJCIf		matchgroup=cConditional start="\(\s*\(\<else\s\+\)\=\<if\|\s*\<while\)\s*("rs=e-1 matchgroup=NONE end="." contains=cJCIfParent
+syn region	cJCFor		matchgroup=cConditional start="\<for\s*(" end=")" contains=ALLBUT,@cParenGroup,cJCTypeInDecl,cErrInBracket
 
 " Put our custom matching things in clusters that are used in ALLBUT places
 " in vim standard C highlighting, because we don't want them to match there.
@@ -29,9 +38,9 @@ syn cluster cPreProcGroup add=cJCParamType,cJCTypeCast
 " Override some standard C things because cJCDecl matches a bit too easily
 syn match	cStatement	"^\s*return\>."me=e-1
 syn match	cStatement	"^\s*goto\s\+\I"me=e-1
-" le case
 syn match	cConditional	"^\s*case\>."me=e-1
 syn match	cConditional	":\s*$"
+
 
 " Delete the keyword-based cType matching, it just gets in the way
 syn clear cType
@@ -51,3 +60,4 @@ hi link cJCTypeCast		cType
 "hi cJCFunc		guibg=#00FF00
 "hi cJCParamType	guibg=#0000FF
 "hi cJCIf		guibg=#00FFFF
+"hi cJCFor		guibg=#00FF80
