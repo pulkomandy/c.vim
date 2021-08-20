@@ -1,9 +1,9 @@
-" We define our own handling for if, else, while and for, so remove them from
+" We define our own handling for if, while and for, so remove them from
 " the simple keyword matching used by default
 syn clear cConditional
 syn clear cRepeat
 
-syn keyword cConditional switch
+syn keyword cConditional switch else
 syn keyword cRepeat do
 
 " Matches for types in function parameters
@@ -12,11 +12,11 @@ syn match	cJCParamType	"\<\(\(const\|restrict\|volatile\|signed\|unsigned\|struc
 
 " Matchs for types in variables and function declarations
 syn match	cJCTypeInDecl	"^\s*\(\(inline\|const\|restrict\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I\i*\([ \t*]\+\(const\|restrict\|volatile\)\)*[ \t*]*" contained
-syn match	cJCDecl		"^\s*\(inline\s\+\)\=\(\I[[:ident:]:]*[ \t*]\+\)\+\s*\I" contains=cJCTypeInDecl
+syn match	cJCDecl		"^\s*\(inline\s\+\)\=\(\I\i*[ \t*]\+\)\+\s*\I" contains=cJCTypeInDecl
 
 " Matches function declarations and definitions
-syn region	cJCFunc		start="^\(\(inline\|const\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I[[:ident:]:]*\s\+\**\s*\I[[:ident:]:]*\s*(" end=")" contains=CJCParamVoid,cJCParamType,cJCTypeInDecl,cComment
-syn region	cJCFunc		start="^\I[[:ident:]:]*\s*(" end=")" contains=CJCParamVoid,cJCParamType
+syn region	cJCFunc		start="^\(\(inline\|const\|extern\|GLOBAL\|static\|register\|auto\|volatile\|virtual\|signed\|unsigned\|struct\)[ \t*]\+\)*\I\i*\s\+\**\s*\I[[:ident:]:]*\s*(" end=")" contains=CJCParamVoid,cJCParamType,cJCTypeInDecl,cComment
+syn region	cJCFunc		start="^\I\i*\s*(" end=")" contains=CJCParamVoid,cJCParamType
 
 " Matches type casts
 syn match	cJCTypeCast	"(\@<=\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*\s*\**\s*\(restrict\)\?\s*)\s*[^) \t;,{]"me=e-2
