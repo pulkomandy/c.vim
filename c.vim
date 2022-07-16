@@ -27,7 +27,7 @@ syn match	cJCTypeCast	"(\@<=\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|
 " accidentally matched by things above.
 syn match	cJCFctCall	"\i\s*(\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*\s*\**\s*)"
 syn region	cJCIfParent	matchgroup=cStatement start="(" end=")" contained contains=ALLBUT,@cParenGroup,cJCTypeInDecl
-syn region	cJCIf		matchgroup=cConditional start="\(\s*\(\<else\s\+\)\=\<if\|\s*\<while\)\s*("rs=e-1 matchgroup=NONE end="." contains=cJCIfParent
+syn region	cJCIf		matchgroup=cConditional start="\(\s*\(\<else\s\+\)\=\<if\|\s*\<while\)\s*("rs=e-1 matchgroup=NONE end="."me=e-1 contains=cJCIfParent
 syn region	cJCFor		matchgroup=cConditional start="\<for\s*(" end=")" contains=ALLBUT,@cParenGroup,cJCTypeInDecl,cErrInBracket
 
 " Put our custom matching things in clusters that are used in ALLBUT places
