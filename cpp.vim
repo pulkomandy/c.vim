@@ -16,9 +16,26 @@ endif
 " Detect type in "new" expressions
 syn match cJCNew "new \I[[:ident:]:]*"  contains=cJCNewStatement
 
-" Match various well known things from the STL that are known to contain types
-" in their template arguments
-syn match cJCCppCast "\(static_cast\|dynamic_cast\|reinterpret_cast\|const_cast\|time_point_cast\|make_unique\|make_shared\|make_optional\)<\zs\I[[:ident:]:&*]*>"me=e-1
+syn clear cppCast
+
+syn match cppCast		"\<\(const\|static\|dynamic\|reinterpret\)_cast\s*<"me=e-1 nextgroup=cJCTemplateType
+syn match cppCast		"\<\(const\|static\|dynamic\|reinterpret\)_cast\s*$" nextgroup=cJCTemplateType
+if !exists("cpp_no_cpp11")
+  syn match cppCast		"\<\(const\|static\|dynamic\)_pointer_cast\s*<"me=e-1 nextgroup=cJCTemplateType
+  syn match cppCast		"\<\(const\|static\|dynamic\)_pointer_cast\s*$" nextgroup=cJCTemplateType
+endif
+if !exists("cpp_no_cpp17")
+  syn match cppCast		"\<reinterpret_pointer_cast\s*<"me=e-1 nextgroup=cJCTemplateType
+  syn match cppCast		"\<reinterpret_pointer_cast\s*$" nextgroup=cJCTemplateType
+endif
+hi def link cppCast		cppStatement
+
+" Match various well known templates from the STL that are known to contain types
+" in their arguments
+syn match cJCStlTemplate "\(time_point_cast\|make_unique\|make_shared\|make_optional\)\s*<"me=e-1 nextgroup=cJCTemplateType
+
+" Highlight the type in a template with a type argument or a C++ cast
+syn match cJCTemplateType "<\zs\I[[:ident:]:&*]*>"ms=s+1,me=e-1
 
 " Redefine several things from the C syntax to handle templates and references
 " in addition to the other things
@@ -40,11 +57,12 @@ syn region	cJCFunc		start="^\I[[:ident:]:<>]*\s*(" end=")" contains=CJCParamVoid
 syn match	cJCParamType	"\<\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I[[:ident:]:<>]*&\?[ \t*]\+\I"he=e-1 contained containedin=cJCFor
 
 hi link cJCNew		cType
+hi link cJCTemplateType cType
 
 hi link cJCCppCast cType
 hi link cJCTypeInDecl cType
 hi link cJCParamType cType
 
 " Uncomment these for debug mode: very visible highlight of what we match
-"hi cJCCppCast		guibg=#00FF80
+"hi cppCast		guibg=#00FF80
 "hi cJCFunc		guibg=#00FF00

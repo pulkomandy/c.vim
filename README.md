@@ -21,7 +21,7 @@ The main change is to detect and highlight types. The following cases are detect
 - Variable declarations
 - Functions return type
 - Function parameters (in declaration and definition)
-- C-style casts (not C++ ones yet, TODO)
+- C and C++-style casts
 - C++ "new" operator
 
 Another change is colorizing the parentheses of if, while, and for in the same
@@ -38,6 +38,9 @@ Put c.vim and cpp.vim in your **.vim/after/syntax/** directory. That's all.
 
 This script uses the standard colors for highlighting (mainly cType) so you
 keep all your colorscheme and customizations when you install it.
+
+**Do not put this file in .vim/syntax**. It is not a complete syntax definition for C and C++.
+It only tweaks a few things in the existing syntax.
 
 How does it look
 ----------------
