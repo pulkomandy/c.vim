@@ -52,3 +52,12 @@ Here is a side by side comparison, with and without c.vim:
 Of course it also works in C++ (and in non-dark mode):
 
 ![](with.cpp.png) ![](without.cpp.png)
+
+How to debug it
+---------------
+
+At the end of each file there are some examples of highlights. Remember that:
+
+- These only set guibg, so they are visible only in gvim. You can start a console vim to see the endresult, and a gvim to see what's matched with which rule
+- They set the background color, which should be quite easy to notice no matter what colorscheme you're using
+- Add or remove rules there depending on what you're debugging
