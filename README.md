@@ -61,3 +61,6 @@ At the end of each file there are some examples of highlights. Remember that:
 - These only set guibg, so they are visible only in gvim. You can start a console vim to see the endresult, and a gvim to see what's matched with which rule
 - They set the background color, which should be quite easy to notice no matter what colorscheme you're using
 - Add or remove rules there depending on what you're debugging
+- To refresh the syntax, use :set ft=c (or cpp). The syntax file will be reloaded and all the changes you made are applied live
+- Make sure to disable rainbow parentheses or similar, they interact badly with the custom parentheses matches used in this syntax (do they always? are some implementations better than other?)
+- http://www.drchip.org/astronaut/vim/doc/hilinks.txt.html is very useful to understand how things are matched (it shows the matching in the statusbar)
