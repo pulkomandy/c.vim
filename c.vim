@@ -2,6 +2,7 @@
 " the simple keyword matching used by default
 syn clear cConditional
 syn clear cRepeat
+syn clear cStorageClass
 
 syn keyword cConditional switch else
 syn keyword cRepeat do
@@ -26,13 +27,13 @@ syn match	cJCTypeCast	"(\@<=\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|
 " Matchs function calls and if/else/while, so they are not
 " accidentally matched by things above.
 syn match	cJCFctCall	"\i\s*(\s*\(\(const\|restrict\|volatile\|signed\|unsigned\|struct\|enum\)[ \t*]\+\)*\I\i*\s*\**\s*)"
-syn region	cJCIfParent	matchgroup=cStatement start="(" end=")" contained contains=ALLBUT,@cParenGroup,cJCTypeInDecl
-syn region	cJCIf		matchgroup=cConditional start="\(\s*\(\<else\s\+\)\=\<if\|\s*\<while\)\s*("rs=e-1 matchgroup=NONE end="."me=e-1 contains=cJCIfParent
+syn region	cJCIfParent matchgroup=cConditional start="(" end=")" contained contains=ALLBUT,@cParenGroup,cJCTypeInDecl
+syn region	cJCIf		matchgroup=cConditional start="\(\s*\(\<else\s\+\)\=\<if\|\s*\<while\)\s*("rs=e-1 matchgroup=NONE end="$"me=e-1 contains=cJCIfParent
 syn region	cJCFor		matchgroup=cConditional start="\<for\s*(" end=")" contains=ALLBUT,@cParenGroup,cJCTypeInDecl,cErrInBracket
 
 " Put our custom matching things in clusters that are used in ALLBUT places
 " in vim standard C highlighting, because we don't want them to match there.
-syn cluster cParenGroup add=cJCTypeInDecl,cJCParamType
+syn cluster cParenGroup add=cJCTypeInDecl,cJCParamType,cJCIfParent
 syn cluster cPreProcGroup add=cJCParamType,cJCTypeCast
 
 " Override some standard C things because cJCDecl matches a bit too easily
@@ -49,6 +50,7 @@ syn clear cType
 " highlight, not just the ones matching C keywords.
 hi link cJCType		cType
 hi link cJCParamType		cType
+hi link cJCParamVoid		cType
 hi link cJCTypeInDecl		cType
 hi link cJCTypeCast		cType
 
